@@ -1,0 +1,28 @@
+This is part of the readPET program.
+Copyright (C) 1999-2003, Andrew Crabb
+
+The portions of this program written by Andrew Crabb are free software;
+you may redistribute and/or modify them under the terms of the GNU 
+General Public License as published by the Free Software Foundation 
+(www.fsf.org).
+
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.
+
+
+****************************************************************************
+* 			 NOT FOR CLINICAL USE                              *
+*                                                                          *
+* This software is to be used only for research and educational purposes.  *
+* Clinical applications of this software are not permitted.                *
+* This software has NOT been evaluated by the US FDA for any clinical use. *
+*                                                                          *
+*			     NO WARRANTY                                   *
+*                                                                          *
+* This program is distributed in the hope that it will be useful, but      *
+* WITHOUT ANY WARRANTY; without even the implied warranty of               *
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU        *
+* General Public License for more details (www.gnu.org/copyleft/gpl.txt)   *
+****************************************************************************

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE attributes PUBLIC "-//NetBeans//DTD DefaultAttributes 1.0//EN" "http://www.netbeans.org/dtds/attributes-1_0.dtd">
+<attributes version="1.0">
+    <fileobject name="Makefile.ahc">
+        <attr name="MAKEFILE_TYPE" serialvalue="aced0005737200326f72672e6f70656e6964652e66696c6573797374656d732e416273747261637446696c654f626a656374245265706c616365896fa1bce4b5219f0200024c000866696c654e616d657400124c6a6176612f6c616e672f537472696e673b4c000666734e616d6571007e0001787074000c4d616b6566696c652e61686374001d2f686f6d652f6168632f42494e2f7372632f5045542f72656164504554"/>
+    </fileobject>
+    <fileobject name="readPET">
+        <attr name="org.netbeans.modules.cpp.ElfLoader.KNOWN_ELFFILE_TYPE" stringvalue="application/x-executable+elf"/>
+    </fileobject>
+    <fileobject name="Makefile">
+        <attr name="MAKEFILE_TYPE" serialvalue="aced0005737200326f72672e6f70656e6964652e66696c6573797374656d732e416273747261637446696c654f626a656374245265706c616365896fa1bce4b5219f0200024c000866696c654e616d657400124c6a6176612f6c616e672f537472696e673b4c000666734e616d6571007e000178707400084d616b6566696c6574001d2f686f6d652f6168632f42494e2f7372632f5045542f72656164504554"/>
+    </fileobject>
+</attributes>
