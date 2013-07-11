@@ -45,8 +45,8 @@ short GE6::getint2( ifstream &instr, int debug ) {
   unsigned char *ptr = (unsigned char *)&i;
 
   instr.read( b, 2 );
-  *(ptr + 3) = *(b + 0);
-  *(ptr + 2) = *(b + 1);
+  *(ptr + 3) = *(b + 1);
+  *(ptr + 2) = *(b + 0);
   if ( debug ) {
     cout << hex;
     cout << "getint2(" << posn << "): ";
@@ -278,8 +278,9 @@ int GE6::isDataFile( const char *name ) {
     cerr << "Cannot open " << name << endl;
     return( 0 );
   }
-  int type = getint2( instr, 0 );
-  cout << "GE6::isDataFile: type = " << type << endl;
+  int pos = instr.tellg();
+  int type = getint2( instr, 1 );
+  cout << "GE6::isDataFile: pos = " << pos << ", type = " << type << endl;
   return( type == PET6_IDENT );
 }
 
