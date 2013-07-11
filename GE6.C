@@ -25,11 +25,12 @@ int GE6::getint1( ifstream &instr, int debug ) {
   char		b[1];
   int		i = 0;
   unsigned char *ptr = (unsigned char *)&i;
-
+  
   instr.read( b, 1 );
-  *(ptr + 3) = *b;
+  // *(ptr + 3) = *b;
+  i = (int)b[0];
   if ( debug )
-    cout << hex << "getint1(" << posn << "): [" << int(b[0]) << "]" << " returning " << dec << i << endl;
+    cout << hex << setfill('0') << setw(4) << "getint1(" << posn << "): [" << int(b[0]) << "]" << " returning " << dec << i << endl;
   posn += 1;
   return i;
 }
@@ -45,13 +46,25 @@ short GE6::getint2( ifstream &instr, int debug ) {
   unsigned char *ptr = (unsigned char *)&i;
 
   instr.read( b, 2 );
-  *(ptr + 3) = *(b + 1);
-  *(ptr + 2) = *(b + 0);
+  // *(ptr + 3) = *(b + 1);
+  // *(ptr + 2) = *(b + 0);
+  i = int(b[1] << 8) + int(b[0]);
+
+  // char b0, b1;
+  // instr.read( &b1, 1 );
+  // instr.read( &b0, 1 );
+  // *(ptr + 3) = b0;
+  // *(ptr + 2) = b1;
+  // i = int(b0 << 8) + int(b1);
+
   if ( debug ) {
     cout << hex;
-    cout << "getint2(" << posn << "): ";
+    
+    cout << "getint2(" << setfill('0') << setw(4) << posn << "): ";
     cout << "[" << setw(2) << setfill('0') << int(b[0]);
     cout << " " << setw(2) << setfill('0') << int(b[1]);
+    // cout << "[" << setw(2) << setfill('0') << int(b0);
+    // cout << " " << setw(2) << setfill('0') << int(b1);
     cout << "]";
     cout << " returning " << dec << (short)i << endl;
   }
@@ -70,14 +83,18 @@ int GE6::getint4( ifstream &instr, int debug ) {
   unsigned char *ptr = (unsigned char *)&i;
 
   instr.read( b, 4 );
-  *(ptr + 3) = *( b + 0);
-  *(ptr + 2) = *( b + 1);
-  *(ptr + 1) = *( b + 2);
-  *(ptr + 0) = *( b + 3);
+  // *(ptr + 3) = *( b + 0);
+  // *(ptr + 2) = *( b + 1);
+  // *(ptr + 1) = *( b + 2);
+  // *(ptr + 0) = *( b + 3);
+  *(ptr + 3) = *( b + 3);
+  *(ptr + 2) = *( b + 2);
+  *(ptr + 1) = *( b + 1);
+  *(ptr + 0) = *( b + 0);
 
   if ( debug ) {
     cout << hex;
-    cout << "getint4(" << posn << "): ";
+    cout << "getint4(" << setfill('0') << setw(4) << posn << "): ";
     cout << "[" << setw(2) << setfill('0') << int(b[0]);
     cout << " " << setw(2) << setfill('0') << int(b[1]);
     cout << " " << setw(2) << setfill('0') << int(b[2]);
@@ -93,6 +110,17 @@ float GE6::getfloat( ifstream &instr ) {
   return getfloat( instr, noisy );
 }
 
+/*
+float GE6::getfloat( ifstream &instr, int debug ) {
+  debug = 1;
+  float f;
+  instr >> f;
+  cout << "getfloat: " << f << endl;
+  return f;
+}
+*/
+
+
 float GE6::getfloat( ifstream &instr, int debug ) {
   // unsigned char b[4];
   char b[4];
@@ -106,25 +134,32 @@ float GE6::getfloat( ifstream &instr, int debug ) {
     cerr << "GE6::getfloat() bad." << endl;
   if ( instr.fail() ) 
     cerr << "GE6::getfloat() fail." << endl;
-  *(ptr + 1) = *(b + 0);
-  *(ptr + 0) = *(b + 1);
-  *(ptr + 3) = *(b + 2);
-  *(ptr + 2) = *(b + 3);
+
+  // *(ptr + 1) = *(b + 0);
+  // *(ptr + 0) = *(b + 1);
+  // *(ptr + 3) = *(b + 2);
+  // *(ptr + 2) = *(b + 3);
+
+  *(ptr + 2) = *(b + 0);
+  *(ptr + 3) = *(b + 1);
+  *(ptr + 0) = *(b + 2);
+  *(ptr + 1) = *(b + 3);
 
   f /= 4.0f;
   if ( debug ) {
     cout << hex;
-    cout << "getfloat(" << posn << "): ";
-    cout << "[" << setw(2) << setfill('0') << int(b[0]);
-    cout << " " << setw(2) << setfill('0') << int(b[1]);
-    cout << " " << setw(2) << setfill('0') << int(b[2]);
-    cout << " " << setw(2) << setfill('0') << int(b[3]);
+    cout << "getfloat(" << setfill('0') << setw(4) << posn << "): ";
+    cout << "[" << setw(2) << setfill('0') << (unsigned int)(b[0]);
+    cout << " " << setw(2) << setfill('0') << (unsigned int)(b[1]);
+    cout << " " << setw(2) << setfill('0') << (unsigned int)(b[2]);
+    cout << " " << setw(2) << setfill('0') << (unsigned int)(b[3]);
     cout << "]";
     cout << " returning " << dec << f << endl;
   }
   posn += 4;
   return f;
 }
+
 
 char *GE6::getstring( ifstream &instr, int len ) {
   return getstring( instr, len, noisy );
@@ -279,8 +314,7 @@ int GE6::isDataFile( const char *name ) {
     return( 0 );
   }
   int pos = instr.tellg();
-  int type = getint2( instr, 1 );
-  cout << "GE6::isDataFile: pos = " << pos << ", type = " << type << endl;
+  int type = getint2( instr, 0 );
   return( type == PET6_IDENT );
 }
 
@@ -391,25 +425,34 @@ void GE6::read( ifstream &instr, int nois ) {
   nbr  = getint2( instr );
   avc  = getfloat( instr );
   ypos = getfloat( instr );
+  // cout << "---------- 0 ----------" << endl;
   
   for (i = 0; i < 30; i++) {
+    // cout << "---------- slice " << i << " ----------" << endl;
     slic[i] = new Slice6( this );
     slic[i]->read( instr, noisy );
   }
-  for (i = 0; i < 30; i++)
+  for (i = 0; i < 30; i++) {
+    // cout << "---------- offs " << i << " ----------" << endl;
     offs[i] = getfloat( instr );
+  }
   pad = getstring( instr, 312, 0 );
+  // cout << "---------- 1 ----------" << endl;
 
-  for (i = 0; i < ncs; i++)
+  for (i = 0; i < ncs; i++) {
+    // cout << "---------- readpixels " << i << " / " << ncs << " ----------" << endl;
     slic[i]->readpixels( instr );
+  }
 
   // Calculate global vol min/max.
   volMax = -10000.0;
   volMin = 10000.0;
   for ( i = 0; i < ncs; i++ ) {
+    // cout << "---------- ncs " << i << " ----------" << endl;
     volMax = ( slic[i]->getMax() > volMax ) ? slic[i]->getMax() : volMax;
     volMin = ( slic[i]->getMin() < volMin ) ? slic[i]->getMin() : volMin;
   }
+  // cout << "---------- 2 ----------" << endl;
 }
 
 void GE6::printTime( void ) {
@@ -675,8 +718,8 @@ void Slice6::readpixels( ifstream &instr ) {
   instr.read( buff, PET6_PIXELS * 2 );
 
   for ( int i = 0; i < PET6_PIXELS; i++ ) {
-    *(ptr1) = buff[i * 2 + 0];
-    *(ptr0) = buff[i * 2 + 1];
+    *(ptr0) = buff[i * 2 + 0];
+    *(ptr1) = buff[i * 2 + 1];
     pixels[i] = short( float(val) * mag / 32000.0 );
   }
 }

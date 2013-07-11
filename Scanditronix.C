@@ -23,6 +23,7 @@
 
 #include <map>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -280,6 +281,8 @@ const string Scanditronix::getPatientID( void ) {
     s = new string( frames[0]->getPnm());
   else
     s = new string;
+  s->erase(std::remove_if(s->begin(), s->end(), ::isspace), s->end());
+
   return *s;
 }
 

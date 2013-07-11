@@ -192,11 +192,14 @@ private:
   int		noisy;
   float		volMax;		// Max pixel val in vol.
   float		volMin;		// Min pixel val in vol.
+  int           endian; // Endianness of host machine.
 
   // class GE6
 public:
   enum { SHORT_HEADER  = 0,
-	 LONG_HEADER  = 1 };		// Full header info.
+         LONG_HEADER  = 1 };		// Full header info.
+  enum { L_ENDIAN = 0,
+         B_ENDIAN = 1 };      // Endianness of host machine.
   GE6( void );
   GE6( const GE6 &rhs );
   int		isDataFile( const char *name );
